@@ -2,6 +2,7 @@ package com.impinj;
 
 import com.impinj.octane.*;
 
+import java.util.Date;
 import java.util.Scanner;
 
 
@@ -26,6 +27,18 @@ public class ReadTags {
 
             ReportConfig report = settings.getReport();
             report.setIncludeAntennaPortNumber(true);
+            report.setIncludeChannel(true);
+            //report.setIncludeCrc(true);
+            //report.setIncludeDopplerFrequency(true);
+            //report.setIncludeFastId(true)
+            //report.setIncludeGpsCoordinates(true);
+            report.setIncludeFirstSeenTime(true);
+            //report.setIncludeLastSeenTime(true);
+            //report.setIncludePcBits(true);
+
+            //report.setIncludePeakRssi(true);
+            //report.setIncludePhaseAngle(true);
+            //report.setIncludeSeenCount(true);
             report.setMode(ReportMode.Individual);
 
             // The reader can be set into various modes in which reader
@@ -51,10 +64,18 @@ public class ReadTags {
             System.out.println("Starting");
             reader.start();
 
-            System.out.println("Press Enter to exit.");
+            System.out.println("Type STOP and Enter to exit.");
             Scanner s = new Scanner(System.in);
-            s.nextLine();
+            //s.nextLine();
 
+            while (s.hasNextLine()) {
+                String line = s.nextLine();
+                System.out.println(line);
+                if (line.equals("STOP")) {
+                    break;
+                }
+            }
+            System.out.println("Disconnecting.");
             reader.stop();
             reader.disconnect();
         } catch (OctaneSdkException ex) {
